@@ -1,89 +1,91 @@
-'use strict'
-module.exports = {
+'use strict';
 
-    class ZenithAccount{
-
-        constructor(accNumber, accName, age){
-            this._accountNumber = accNumber;
-            this._accountName = accName;
-            this._balance = 0;
-            this._age =age;
-
-        }
-
-        get accountName(){
-            return this._accountName;
-        }
-        get accountNumber(){
-            return this._accountNumber;
-        }
-        get balance(){
-            return this._balance;
-        }
-        set age(newAge){
-            this._age = newAge;
-        }
-        get age(){
-            return this._age;
-        }
-        deposit(amount){
-            if(amount > 0){
-                this._balance += amount;
-                return true;
-            }else{
-                return false;
-            }
-        }
-        withdraw(amount){
-            if(amount > this._balance){
-                return false;
-            }else{
-                this._balance -= amount;
-                return true;
-            } 
-        }
-
+class ZenithAccount {
+    // Initialize the account details with account name, number and balance
+    constructor(name, number, balance){
+            this.accountName = name;
+            this.accountNumber = number;
+            this.accountBalance = balance;
     }
-    class ZecaAccount extends ZenithAccount{
-        constructor (accNumber, accName, accBonus){
-            super (accNumber,accName);
-            this.atmBonus = accBonus;
+    // gets the account holders account name
+    get name(){
+        return this.accountName;
+    }
+    // gets the account holders account number
+    get number(){
+        return this.accountNumber;
+    }
+    // gets the account holders account balance
+    get balance(){
+        return this.accountBalance;
+    }
+    
+    // Updates the account balance with money deposited
+    deposit(amount){
+        // Check if the amount to be deposited is a number value
+        if (typeof amount !== 'number') {
+            return 'Invalid input';
         }
-        addBonus(){
-            this.bonus = getbalance() * this.atmBonus/100;
-            deposit(this.bonus);
+        else{
+            this.accountBalance += amount;
         }
     }
-    class checkingAccount extends ZenithAccount{
-
-        constructor(accNumber,accName){
-            super(accNumber,accName);
-            this._transactionCount = 0;
-            this._numFree = 2;
-            this._transFee = 5;
+    
+    // Updates the account balance after a withdrawal
+    withdraw(amount){
+        // check if the amount is a number
+        if (typeof amount !== 'number') {
+            return 'Invalid input';
         }
-        deposit(amount){
-            if (super.deposit(amount)){
-                this._transactionCount++;
-                return true;
-            }
-            return false;
+        // check if the amount to be withdrawn exceeds the account balance
+        else if (amount > this.accountBalance){
+            return 'You have insufficient balance';
         }
-        withdraw(amount){
-            if(super.withdraw(amount)){
-                this._transactionCount++;
-                return true;
-            }
-            return false;
-        }
-        deductFees(){
-            if(this_transactionCount > this._numFree){
-                const fees = this._transFee * (this_transactionCount - this._numFree);
-
-            }
-            if(super.withdraw(fees)){
-                this._transactionCount = 0;
-            }
+        else{
+            this.accountBalance -= amount;
         }
     }
-}    
+}
+
+class ZecaAccount extends ZenithAccount {
+    // Updates account balance for savings account
+    deposit(amount) {
+        // Check if the amount to be deposited is a number value
+        if (typeof amount !== 'number') {
+            return 'Invalid input';
+        }
+        // perform deposit and add interest value
+        else {
+            this.accountBalance = this.accountBalance + amount + ((1/100) * amount);
+        }
+    }
+}
+
+class CoporateAccount extends ZenithAccount {
+    constructor(name, number, balance) {
+        super(name, number, balance);
+        this.creditLine = 50000;
+    }
+
+    // Updates the account balance for a current account after withdrawal
+    withdraw(amount) {
+        // Check if the amount to be withdrawn is a number value
+        if (typeof amount !== 'number') {
+            return 'Invalid input';
+        }
+        // Check if the amount places the account balance below the credit line
+        if ((this.accountBalance - amount) < -this.creditLine) {
+            return 'You have insufficient coverage';
+        }
+        // perform withdrawal without 2% charge on the credit line withdrawn
+        else if (this.accountBalance > amount) {
+            this.accountBalance -= amount
+        }
+        // perform withdrawal with 2% charge on the credit line withdrawn
+        else {
+            this.accountBalance = this.accountBalance - amount - ((2/100) * (amount - this.balance));
+        }
+    }
+}
+
+export {ZenithAccount, ZecaAccount, CoporateAccount};
