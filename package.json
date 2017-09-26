@@ -1,0 +1,37 @@
+{
+  "name": "self-learning-day-1",
+  "version": "1.0.0",
+  "description": "self learning day 1",
+  "main": "src/main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests/test.js --compilers js:babel-core/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UcheIgbokwe/self-learning-day-1.git"
+  },
+  "keywords": [
+    "SLD",
+    "Javascript"
+  ],
+  "author": "Uche Igbokwe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UcheIgbokwe/self-learning-day-1/issues"
+  },
+  "homepage": "https://github.com/UcheIgbokwe/self-learning-day-1#readme",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  }
+}
